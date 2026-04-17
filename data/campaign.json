@@ -1,0 +1,32 @@
+{
+  "campaign": {
+    "title": "Current Campaign",
+    "summary": "Shared notes and story reference for the current adventure.",
+    "sections": [
+      {
+        "title": "Current Objective",
+        "entries": [
+          "Track the main threat and protect the party while gathering information."
+        ]
+      },
+      {
+        "title": "Recent Events",
+        "entries": [
+          "The party has assembled and begun preparing for the next stage of the journey."
+        ]
+      },
+      {
+        "title": "Important Characters",
+        "entries": [
+          "Sarian, Yaro, and Bo are current active party members."
+        ]
+      },
+      {
+        "title": "Rumors and Leads",
+        "entries": [
+          "No major rumors recorded yet."
+        ]
+      }
+    ]
+  }
+}

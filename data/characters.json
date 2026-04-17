@@ -1,0 +1,88 @@
+{
+  "characters": [
+    {
+      "id": "guard-captain",
+      "name": "Guard Captain",
+      "role": "Town Guard",
+      "race": "",
+      "portrait": "images/stub-portrait.svg",
+      "health": {
+        "current": 10,
+        "max": 10
+      },
+      "armour": {
+        "current": 3,
+        "max": 3
+      },
+      "sections": {
+        "attributes": {
+          "visible": true
+        },
+        "skills": {
+          "visible": true
+        },
+        "combatNotes": {
+          "visible": true
+        },
+        "inventory": {
+          "visible": false
+        },
+        "resources": {
+          "visible": false
+        },
+        "notes": {
+          "visible": true
+        },
+        "backstory": {
+          "visible": false
+        }
+      },
+      "attributes": {
+        "physical": 1,
+        "intellectual": 0,
+        "social": 1
+      },
+      "skills": {
+        "Physical": [
+          {
+            "name": "Spear Fighting",
+            "rank": 1
+          }
+        ],
+        "Social": [
+          {
+            "name": "Command",
+            "rank": 1
+          }
+        ]
+      },
+      "combatNotes": [
+        "Disciplined frontline guard.",
+        "Likely to support allies rather than duel alone."
+      ],
+      "inventory": [
+        {
+          "name": "Spear",
+          "cost": "",
+          "description": "Standard issue weapon."
+        },
+        {
+          "name": "Guard Armour",
+          "cost": "",
+          "description": "Protective town gear."
+        }
+      ],
+      "resources": {
+        "currency": "",
+        "crystals": [],
+        "supplies": []
+      },
+      "notes": [
+        "Known to the party as a firm but lawful authority figure."
+      ],
+      "backstory": [
+        "Veteran officer with a long record of service to the town."
+      ]
+    }
+  ]
+}

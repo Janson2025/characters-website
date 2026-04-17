@@ -1,0 +1,299 @@
+{
+  "partyCharacters": [
+    {
+      "id": "sarian",
+      "name": "Sarian",
+      "role": "Ranger",
+      "race": "Krockan",
+      "portrait": "images/sarian.webp",
+      "health": {
+        "current": 12,
+        "max": 12
+      },
+      "armour": {
+        "current": 4,
+        "max": 4
+      },
+      "attributes": {
+        "physical": 1,
+        "intellectual": -1,
+        "social": 1
+      },
+      "skills": {
+        "Physical": [
+          {
+            "name": "Tracking",
+            "rank": 1
+          },
+          {
+            "name": "Archery",
+            "rank": 1
+          },
+          {
+            "name": "Wilderness Survival",
+            "rank": 1
+          }
+        ],
+        "Social": [
+          {
+            "name": "Deception",
+            "rank": 1
+          },
+          {
+            "name": "Intimidation",
+            "rank": 1
+          },
+          {
+            "name": "Stealth",
+            "rank": 1
+          }
+        ]
+      },
+      "combatNotes": [
+        "Uses bow for ranged combat.",
+        "Carries an heirloom ice axe for close combat.",
+        "Shield can improve defense but occupies one hand.",
+        "Bear hide armour provides medium protection."
+      ],
+      "inventory": [
+        {
+          "name": "Great Axe",
+          "cost": "250 gold pieces",
+          "description": "Heirloom ice axe that uses energy prima magic."
+        },
+        {
+          "name": "Bow",
+          "cost": "45 gold pieces",
+          "description": "Primary ranged weapon."
+        },
+        {
+          "name": "30 Arrows",
+          "cost": "30 gold pieces",
+          "description": "1 gold coin each."
+        },
+        {
+          "name": "Shield",
+          "cost": "100 gold pieces",
+          "description": "Adds protection but uses one hand."
+        },
+        {
+          "name": "Bear Hide Armour",
+          "cost": "100 gold pieces",
+          "description": "Medium armour."
+        },
+        {
+          "name": "Medicine Kit (Heavy)",
+          "cost": "90 gold pieces",
+          "description": "Useful for treatment and travel emergencies."
+        },
+        {
+          "name": "3 Days of Rations",
+          "cost": "30 gold pieces",
+          "description": "Food for travel."
+        },
+        {
+          "name": "Flask of Oil",
+          "cost": "5 gold pieces",
+          "description": "General adventuring utility."
+        },
+        {
+          "name": "Rope",
+          "cost": "5 gold pieces",
+          "description": "General adventuring utility."
+        },
+        {
+          "name": "Lantern",
+          "cost": "10 gold pieces",
+          "description": "Portable light source."
+        },
+        {
+          "name": "Random Inventory",
+          "cost": "200 gold pieces",
+          "description": "Miscellaneous gear not yet fully listed."
+        }
+      ],
+      "resources": {
+        "currency": "60 coinage left",
+        "crystals": [
+          {
+            "name": "Low Quality Ice Crystals",
+            "amount": 15
+          }
+        ],
+        "supplies": []
+      },
+      "notes": [
+        "Wilderness-focused ranged combatant.",
+        "Strong survival and scouting role.",
+        "Social skills make stealth and intimidation possible outside direct combat."
+      ],
+      "backstory": [
+        "A Krockan ranger shaped by wilderness travel and survival.",
+        "Carries an heirloom ice axe tied to old family and prima traditions.",
+        "Functions as scout, tracker, and ranged hunter for the party."
+      ]
+    },
+    {
+      "id": "yaro",
+      "name": "Yaro",
+      "role": "Scallar",
+      "race": "",
+      "portrait": "images/yaro.webp",
+      "health": {
+        "current": 9,
+        "max": 9
+      },
+      "armour": {
+        "current": 1,
+        "max": 1
+      },
+      "attributes": {
+        "physical": 0,
+        "intellectual": 1,
+        "social": 0
+      },
+      "skills": {
+        "Intellectual": [
+          {
+            "name": "Healing Magic",
+            "rank": 1
+          },
+          {
+            "name": "Spirit Magic",
+            "rank": 1
+          },
+          {
+            "name": "History",
+            "rank": 1
+          }
+        ]
+      },
+      "combatNotes": [
+        "Support-focused magic user.",
+        "Can heal, banish minor spirits, and work with spirit-based tools.",
+        "Better suited to utility and magical problem-solving than direct physical combat."
+      ],
+      "inventory": [
+        {
+          "name": "Amulet of Minor Healing",
+          "cost": "250 gold pieces",
+          "description": "Uses life crystals."
+        },
+        {
+          "name": "Enchanted Raven Skull",
+          "cost": "150 gold pieces",
+          "description": "Uses spirit crystals. Creates an enchanted raven able to follow minor commands, though some abilities are currently limited."
+        },
+        {
+          "name": "Staff of Minor Banishing",
+          "cost": "300 gold pieces",
+          "description": "Uses spirit crystals. Can banish minor spiritual beings without fighting them and temporarily seal rifts in the spirit barrier fabric."
+        },
+        {
+          "name": "Tome of Minor Summoning",
+          "cost": "100 gold pieces",
+          "description": "Uses spirit crystals. Allows summoning of a minor spirit with the right ingredients but does not grant control over it."
+        },
+        {
+          "name": "3 Days of Rations",
+          "cost": "30 gold pieces",
+          "description": "Food for travel."
+        }
+      ],
+      "resources": {
+        "currency": "20 gold remaining",
+        "crystals": [
+          {
+            "name": "Healing Magic Crystals",
+            "amount": 5
+          },
+          {
+            "name": "Spirit Crystals",
+            "amount": 10
+          }
+        ],
+        "supplies": []
+      },
+      "notes": [
+        "Primary healer and spirit specialist.",
+        "Useful for ritual, support, and supernatural encounters.",
+        "Carries several crystal-powered magical tools."
+      ],
+      "backstory": [
+        "A Scallar scholar of healing, spirits, and forgotten knowledge.",
+        "Relies on crystal-powered tools and ritual practice more than brute force.",
+        "Often serves as the party's healer and supernatural specialist."
+      ]
+    },
+    {
+      "id": "bo",
+      "name": "Bo",
+      "role": "Young Beaver Bear",
+      "race": "Bearver Bear",
+      "portrait": "images/Bo.webp",
+      "health": {
+        "current": 11,
+        "max": 11
+      },
+      "armour": {
+        "current": 2,
+        "max": 2
+      },
+      "attributes": {
+        "physical": 1,
+        "intellectual": 0,
+        "social": 0
+      },
+      "skills": {
+        "Physical": [
+          {
+            "name": "Swimming",
+            "rank": 1
+          },
+          {
+            "name": "Strength",
+            "rank": 1
+          }
+        ],
+        "Intellectual": [
+          {
+            "name": "Blacksmithing",
+            "rank": 1
+          }
+        ]
+      },
+      "combatNotes": [
+        "Can fight with gauntlets in close combat.",
+        "Carries a trident for reach and underwater fighting.",
+        "Gauntlets can create an air bubble underwater large enough for a small party."
+      ],
+      "inventory": [
+        {
+          "name": "Gauntlets",
+          "cost": "",
+          "description": "Can be used in combat and can create an underwater air bubble large enough for a small party."
+        },
+        {
+          "name": "Trident",
+          "cost": "",
+          "description": "Useful for melee combat and underwater encounters."
+        }
+      ],
+      "resources": {
+        "currency": "",
+        "crystals": [],
+        "supplies": []
+      },
+      "notes": [
+        "Strong physical support character.",
+        "Useful in underwater scenes.",
+        "Blacksmithing may help with repairs, tools, and equipment work."
+      ],
+      "backstory": [
+        "A young bearver bear with a strong build and practical courage.",
+        "Comfortable in the water and skilled in basic blacksmithing.",
+        "His gauntlets make him especially valuable in underwater journeys."
+      ]
+    }
+  ]
+}

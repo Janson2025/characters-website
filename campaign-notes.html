@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campaign Notes</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body data-page="campaign">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div class="brand-block">
+        <p class="eyebrow">Campaign Companion</p>
+        <h1 class="app-title">Campaign Notes</h1>
+      </div>
+
+      <nav class="top-nav" aria-label="Primary">
+        <a class="nav-link" data-nav="party" href="party-character.html">Party</a>
+        <a class="nav-link" data-nav="characters" href="characters.html">Characters</a>
+        <a class="nav-link" data-nav="campaign" href="campaign-notes.html">Campaign Notes</a>
+      </nav>
+
+      <div class="selector-block"><label>View</label><div class="vital-card">Shared Notes</div></div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section id="appError" class="error-wrap" hidden></section>
+    
+<section class="page-intro">
+  <p class="eyebrow">Campaign Notes</p>
+  <h2 id="campaignTitle">Loading...</h2>
+  <p id="campaignSummary" class="subtitle"></p>
+</section>
+
+<section id="campaignSections" class="cards-stack"></section>
+
+  </main>
+</body>
+</html>
