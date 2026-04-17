@@ -1,7 +1,7 @@
 Project structure
 
 character_sheets/
-  party-character.html
+  index.html
   characters.html
   campaign-notes.html
   styles.css
@@ -15,7 +15,7 @@ character_sheets/
 
 Notes:
 - All three pages now use the shared app.js file.
-- party-character.html loads data/party.json
+- index.html loads data/party.json
 - characters.html loads data/characters.json and respects section visibility flags
 - campaign-notes.html loads data/campaign.json
 
