@@ -11,6 +11,10 @@ const App = (() => {
     campaign: null,
   };
 
+  // ======================
+  // DATA LOADING
+  // ======================
+
   async function fetchJson(path) {
     const response = await fetch(path, { cache: "no-store" });
     if (!response.ok) {
@@ -21,21 +25,25 @@ const App = (() => {
 
   async function loadPartyCharacters() {
     const data = await fetchJson(PATHS.party);
-    state.partyCharacters = Array.isArray(data.partyCharacters) ? data.partyCharacters : [];
+    state.partyCharacters = data.partyCharacters || [];
     return state.partyCharacters;
   }
 
   async function loadCharacters() {
     const data = await fetchJson(PATHS.characters);
-    state.characters = Array.isArray(data.characters) ? data.characters : [];
+    state.characters = data.characters || [];
     return state.characters;
   }
 
   async function loadCampaign() {
     const data = await fetchJson(PATHS.campaign);
-    state.campaign = data.campaign || null;
+    state.campaign = data.campaign || {};
     return state.campaign;
   }
+
+  // ======================
+  // HELPERS
+  // ======================
 
   function qs(selector, root = document) {
     return root.querySelector(selector);
@@ -46,50 +54,33 @@ const App = (() => {
     return value > 0 ? `+${value}` : `${value}`;
   }
 
-  function escapeHtml(value) {
-    return String(value ?? "")
+  function escapeHtml(str) {
+    return String(str ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
+      .replaceAll(">", "&gt;");
   }
 
-  function makeList(items, emptyText = "None listed.") {
-    if (!items || !items.length) {
-      return `<p class="muted">${escapeHtml(emptyText)}</p>`;
+  function makeList(items, empty = "None listed.") {
+    if (!items || items.length === 0) {
+      return `<p class="muted">${empty}</p>`;
     }
-    return `<ul class="clean-list stacked">` + items.map(item => `<li>${escapeHtml(item)}</li>`).join("") + `</ul>`;
-  }
-
-  function makeKeyValueList(items, emptyText = "None listed.") {
-    if (!items || !items.length) {
-      return `<p class="muted">${escapeHtml(emptyText)}</p>`;
-    }
-    return `
-      <ul class="clean-list">
-        ${items.map(item => `
-          <li>
-            <span>${escapeHtml(item.label)}</span>
-            <strong>${escapeHtml(item.value)}</strong>
-          </li>
-        `).join("")}
-      </ul>
-    `;
+    return `<ul class="clean-list stacked">
+      ${items.map(i => `<li>${escapeHtml(i)}</li>`).join("")}
+    </ul>`;
   }
 
   function makeSkillGroups(skills) {
-    const entries = Object.entries(skills || {});
-    if (!entries.length) return `<p class="muted">No skills listed.</p>`;
+    if (!skills) return `<p class="muted">No skills listed.</p>`;
 
-    return entries.map(([group, items]) => `
+    return Object.entries(skills).map(([group, list]) => `
       <section class="skill-group">
         <h4>${escapeHtml(group)}</h4>
         <ul class="clean-list">
-          ${(items || []).map(skill => `
+          ${list.map(s => `
             <li>
-              <span>${escapeHtml(skill.name)}</span>
-              <strong>${escapeHtml(formatModifier(skill.rank))}</strong>
+              <span>${escapeHtml(s.name)}</span>
+              <strong>${formatModifier(s.rank)}</strong>
             </li>
           `).join("")}
         </ul>
@@ -98,208 +89,188 @@ const App = (() => {
   }
 
   function makeInventory(items) {
-    if (!items || !items.length) return `<p class="muted">No items listed.</p>`;
-    return `
-      <ul class="inventory-list">
-        ${items.map(item => `
-          <li>
-            <div class="inventory-top">
-              <strong>${escapeHtml(item.name)}</strong>
-              ${item.cost ? `<span class="item-cost">${escapeHtml(item.cost)}</span>` : ""}
-            </div>
-            ${item.description ? `<p>${escapeHtml(item.description)}</p>` : ""}
-          </li>
-        `).join("")}
-      </ul>
-    `;
+    if (!items || items.length === 0) {
+      return `<p class="muted">No items listed.</p>`;
+    }
+
+    return `<ul class="inventory-list">
+      ${items.map(i => `
+        <li>
+          <div class="inventory-top">
+            <strong>${escapeHtml(i.name)}</strong>
+            ${i.cost ? `<span class="item-cost">${escapeHtml(i.cost)}</span>` : ""}
+          </div>
+          ${i.description ? `<p>${escapeHtml(i.description)}</p>` : ""}
+        </li>
+      `).join("")}
+    </ul>`;
   }
 
-  function getCurrentId(paramName, fallbackId) {
+  function getCurrentId(param, fallback) {
     const params = new URLSearchParams(window.location.search);
-    return (params.get(paramName) || fallbackId || "").toLowerCase();
+    return (params.get(param) || fallback).toLowerCase();
   }
 
-  function updateUrl(paramName, value) {
-    const url = new URL(window.location.href);
-    url.searchParams.set(paramName, value);
+  function updateUrl(param, value) {
+    const url = new URL(window.location);
+    url.searchParams.set(param, value);
     window.history.replaceState({}, "", url);
   }
 
-  function setActiveNav(pageName) {
+  function setActiveNav(page) {
     document.querySelectorAll("[data-nav]").forEach(link => {
-      const isActive = link.dataset.nav === pageName;
-      link.classList.toggle("active", isActive);
-      link.setAttribute("aria-current", isActive ? "page" : "false");
+      const active = link.dataset.nav === page;
+      link.classList.toggle("active", active);
     });
   }
 
-  function renderCharacterDetails(character, options = {}) {
-    const {
-      root = document,
-      sectionVisibility = null,
-    } = options;
+  // ======================
+  // RENDER CHARACTER
+  // ======================
 
-    qs("#name", root).textContent = character.name || "Unnamed Character";
-    qs("#role", root).textContent = character.role || "";
-    qs("#raceWrap", root).textContent = character.race ? `• ${character.race}` : "";
-    qs("#portrait", root).src = character.portrait || "images/stub-portrait.svg";
-    qs("#portrait", root).alt = `${character.name || "Character"} portrait`;
-    qs("#health", root).textContent = `${character.health?.current ?? 0} / ${character.health?.max ?? 0}`;
-    qs("#armour", root).textContent = `${character.armour?.current ?? 0} / ${character.armour?.max ?? 0}`;
+  function renderCharacter(character, visibility = null) {
+    qs("#name").textContent = character.name;
+    qs("#role").textContent = character.role || "";
+    qs("#raceWrap").textContent = character.race ? `• ${character.race}` : "";
 
-    qs("#attributeCards", root).innerHTML = `
+    qs("#portrait").src = character.portrait || "images/stub-portrait.png";
+
+    qs("#health").textContent =
+      `${character.health?.current ?? 0} / ${character.health?.max ?? 0}`;
+
+    qs("#armour").textContent =
+      `${character.armour?.current ?? 0} / ${character.armour?.max ?? 0}`;
+
+    qs("#attributeCards").innerHTML = `
       <div class="attribute-card">
         <span>Physical</span>
-        <strong>${escapeHtml(formatModifier(character.attributes?.physical))}</strong>
+        <strong>${formatModifier(character.attributes?.physical)}</strong>
       </div>
       <div class="attribute-card">
         <span>Intellectual</span>
-        <strong>${escapeHtml(formatModifier(character.attributes?.intellectual))}</strong>
+        <strong>${formatModifier(character.attributes?.intellectual)}</strong>
       </div>
       <div class="attribute-card">
         <span>Social</span>
-        <strong>${escapeHtml(formatModifier(character.attributes?.social))}</strong>
+        <strong>${formatModifier(character.attributes?.social)}</strong>
       </div>
     `;
 
+    qs("#skills").innerHTML = makeSkillGroups(character.skills);
+    qs("#inventory").innerHTML = makeInventory(character.inventory);
+    qs("#combatNotes").innerHTML = makeList(character.combatNotes);
+    qs("#notes").innerHTML = makeList(character.notes);
+    qs("#backstory").innerHTML = makeList(character.backstory);
+
     const resources = [
-      ...(character.resources?.currency ? [{ label: "Currency", value: character.resources.currency }] : []),
-      ...(character.resources?.crystals ? character.resources.crystals.map(c => ({ label: c.name, value: c.amount })) : []),
-      ...(character.resources?.supplies ? character.resources.supplies.map(s => ({ label: "Supply", value: s })) : []),
+      ...(character.resources?.currency
+        ? [`Currency: ${character.resources.currency}`]
+        : []),
+      ...(character.resources?.crystals || []).map(
+        c => `${c.name}: ${c.amount}`
+      ),
     ];
 
-    const sections = {
-      attributes: qs('[data-section="attributes"]', root),
-      skills: qs('[data-section="skills"]', root),
-      combatNotes: qs('[data-section="combatNotes"]', root),
-      inventory: qs('[data-section="inventory"]', root),
-      resources: qs('[data-section="resources"]', root),
-      notes: qs('[data-section="notes"]', root),
-      backstory: qs('[data-section="backstory"]', root),
-    };
+    qs("#resources").innerHTML = makeList(resources);
 
-    if (sections.combatNotes) qs("#combatNotes", root).innerHTML = makeList(character.combatNotes, "No combat notes listed.");
-    if (sections.skills) qs("#skills", root).innerHTML = makeSkillGroups(character.skills);
-    if (sections.inventory) qs("#inventory", root).innerHTML = makeInventory(character.inventory);
-    if (sections.resources) qs("#resources", root).innerHTML = makeKeyValueList(resources, "No tracked resources.");
-    if (sections.notes) qs("#notes", root).innerHTML = makeList(character.notes, "No notes listed.");
-    if (sections.backstory) qs("#backstory", root).innerHTML = makeList(character.backstory, "No backstory details listed.");
-
-    if (sectionVisibility) {
-      Object.entries(sectionVisibility).forEach(([sectionName, config]) => {
-        const sectionEl = sections[sectionName];
-        if (!sectionEl) return;
-        const visible = !!config?.visible;
-        sectionEl.hidden = !visible;
+    // Visibility control (for NPCs)
+    if (visibility) {
+      Object.entries(visibility).forEach(([section, config]) => {
+        const el = document.querySelector(`[data-section="${section}"]`);
+        if (el) el.hidden = !config.visible;
       });
     }
   }
 
+  // ======================
+  // PAGE INITIALIZERS
+  // ======================
+
   async function initPartyPage() {
     setActiveNav("party");
-    const characters = await loadPartyCharacters();
-    if (!characters.length) {
-      throw new Error("No party characters found in data/party.json");
-    }
 
+    const chars = await loadPartyCharacters();
     const select = qs("#characterSelect");
-    select.innerHTML = characters.map(character =>
-      `<option value="${escapeHtml(character.id)}">${escapeHtml(character.name)}</option>`
+
+    select.innerHTML = chars.map(c =>
+      `<option value="${c.id}">${c.name}</option>`
     ).join("");
 
-    const currentId = getCurrentId("character", characters[0].id);
-    const current = characters.find(c => c.id === currentId) || characters[0];
+    const currentId = getCurrentId("character", chars[0].id);
+    let current = chars.find(c => c.id === currentId) || chars[0];
 
     select.value = current.id;
-    renderCharacterDetails(current);
-    document.title = `${current.name} - Party Character`;
+    renderCharacter(current);
 
     select.addEventListener("change", () => {
-      const selected = characters.find(c => c.id === select.value) || characters[0];
+      const selected = chars.find(c => c.id === select.value);
       updateUrl("character", selected.id);
-      renderCharacterDetails(selected);
-      document.title = `${selected.name} - Party Character`;
+      renderCharacter(selected);
     });
   }
 
   async function initCharactersPage() {
     setActiveNav("characters");
-    const characters = await loadCharacters();
-    if (!characters.length) {
-      throw new Error("No non-party characters found in data/characters.json");
-    }
 
+    const chars = await loadCharacters();
     const select = qs("#characterSelect");
-    select.innerHTML = characters.map(character =>
-      `<option value="${escapeHtml(character.id)}">${escapeHtml(character.name)}</option>`
+
+    select.innerHTML = chars.map(c =>
+      `<option value="${c.id}">${c.name}</option>`
     ).join("");
 
-    const currentId = getCurrentId("character", characters[0].id);
-    const current = characters.find(c => c.id === currentId) || characters[0];
+    const currentId = getCurrentId("character", chars[0].id);
+    let current = chars.find(c => c.id === currentId) || chars[0];
 
     select.value = current.id;
-    renderCharacterDetails(current, { sectionVisibility: current.sections || {} });
-    document.title = `${current.name} - Character`;
+    renderCharacter(current, current.sections);
 
     select.addEventListener("change", () => {
-      const selected = characters.find(c => c.id === select.value) || characters[0];
+      const selected = chars.find(c => c.id === select.value);
       updateUrl("character", selected.id);
-      renderCharacterDetails(selected, { sectionVisibility: selected.sections || {} });
-      document.title = `${selected.name} - Character`;
+      renderCharacter(selected, selected.sections);
     });
   }
 
   async function initCampaignPage() {
     setActiveNav("campaign");
-    const campaign = await loadCampaign();
-    document.title = `${campaign.title || "Campaign Notes"} - Campaign Notes`;
 
-    qs("#campaignTitle").textContent = campaign.title || "Campaign Notes";
+    const campaign = await loadCampaign();
+
+    qs("#campaignTitle").textContent = campaign.title || "Campaign";
     qs("#campaignSummary").textContent = campaign.summary || "";
 
-    const sectionsEl = qs("#campaignSections");
-    const sections = Array.isArray(campaign.sections) ? campaign.sections : [];
+    const container = qs("#campaignSections");
 
-    if (!sections.length) {
-      sectionsEl.innerHTML = `<article class="card"><h3>No notes yet</h3><p class="muted">Add sections to data/campaign.json.</p></article>`;
-      return;
-    }
-
-    sectionsEl.innerHTML = sections.map(section => `
+    container.innerHTML = campaign.sections.map(section => `
       <article class="card">
-        <h3>${escapeHtml(section.title)}</h3>
-        ${makeList(section.entries, "No entries listed.")}
+        <h3>${section.title}</h3>
+        ${makeList(section.entries)}
       </article>
     `).join("");
   }
 
-  function showError(error) {
-    const target = qs("#appError");
-    if (target) {
-      target.innerHTML = `
-        <article class="card">
-          <h3>Unable to load page data</h3>
-          <p>${escapeHtml(error.message)}</p>
-          <p class="muted">If you opened the HTML file directly, your browser may be blocking local JSON loading. Running a small local server usually fixes that.</p>
-        </article>
-      `;
-      target.hidden = false;
-    } else {
-      console.error(error);
-      alert(error.message);
-    }
+  function initCombatPage() {
+    setActiveNav("combat");
+  }
+
+  function showError(err) {
+    console.error(err);
+    alert(err.message);
   }
 
   return {
     initPartyPage,
     initCharactersPage,
     initCampaignPage,
+    initCombatPage,
     showError,
   };
 })();
 
 document.addEventListener("DOMContentLoaded", async () => {
   const page = document.body.dataset.page;
+
   try {
     if (page === "party") {
       await App.initPartyPage();
@@ -307,8 +278,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       await App.initCharactersPage();
     } else if (page === "campaign") {
       await App.initCampaignPage();
+    } else if (page === "combat") {
+      App.initCombatPage();
     }
-  } catch (error) {
-    App.showError(error);
+  } catch (err) {
+    App.showError(err);
   }
 });

@@ -54,7 +54,7 @@ body {
 
 .top-nav {
   display: flex;
-  gap: 10px;
+  gap: 5px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -359,4 +359,59 @@ body {
   .card {
     break-inside: avoid;
   }
+}
+
+
+.quick-flow-card {
+  padding: 22px;
+}
+
+.flow-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(214, 203, 189, 0.5);
+}
+
+.flow-step:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+}
+
+.flow-step p,
+.example-box p,
+.card p {
+  margin-bottom: 0;
+  line-height: 1.55;
+}
+
+.example-box {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.example-box strong {
+  display: block;
+  margin-bottom: 6px;
 }

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combat Rules</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body data-page="combat">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div class="brand-block">
+        <p class="eyebrow">Campaign Companion</p>
+        <h1 class="app-title">Combat Rules</h1>
+      </div>
+
+      <nav class="top-nav" aria-label="Primary">
+        <a class="nav-link" data-nav="party" href="party-character.html">Party</a>
+        <a class="nav-link" data-nav="characters" href="characters.html">Characters</a>
+        <a class="nav-link" data-nav="campaign" href="campaign-notes.html">Campaign Notes</a>
+        <a class="nav-link" data-nav="combat" href="combat-rules.html">Combat Rules</a>
+      </nav>
+
+      <div class="selector-block">
+        <label>Reference</label>
+        <div class="vital-card">Player Guide</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section id="appError" class="error-wrap" hidden></section>
+
+    <section class="page-intro">
+      <p class="eyebrow">Quick Reference</p>
+      <h2>Combat at a Glance</h2>
+      <p class="subtitle">One roll handles both offense and defense. Build your dice pool, roll for successes, cancel opposing successes, and apply the remaining damage.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card quick-flow-card">
+        <h3>Combat Flow</h3>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <span class="step-number">1</span>
+            <div>
+              <strong>Roll initiative</strong>
+              <p>Stealthed characters roll first and act before non-stealthed characters. Everyone rolls 1d6. Reroll ties.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">2</span>
+            <div>
+              <strong>Choose attribute and skills</strong>
+              <p>Select Physical, Intellectual, or Social based on how you are fighting, then add any relevant skills.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">3</span>
+            <div>
+              <strong>Roll dice</strong>
+              <p>Every die showing 4, 5, or 6 is a success.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">4</span>
+            <div>
+              <strong>Cancel successes</strong>
+              <p>Attacker and defender compare successes. Opposing successes automatically cancel each other.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-number">5</span>
+            <div>
+              <strong>Apply damage and effects</strong>
+              <p>Remaining successes deal damage based on weapon rating, then armour absorbs what it can.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two-up">
+      <article class="card">
+        <h3>Dice & Successes</h3>
+        <p>Combat uses d6s. Build your pool from your base combat dice, your chosen attribute, and any relevant skills. Each 4, 5, or 6 counts as one success.</p>
+        <div class="example-box">
+          <strong>Example</strong>
+          <p>A character rolls 6 dice and gets 2, 4, 4, 5, 1, 6. That is 4 successes.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Opposed Combat Rolls</h3>
+        <p>Both attacker and defender roll at the same time. The lower number of successes is subtracted from the higher number. Any successes left over become the attack’s damage level before armour is applied.</p>
+        <div class="example-box">
+          <strong>Example</strong>
+          <p>If one combatant gets 4 successes and the other gets 2, the attack has 2 net successes.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two-up">
+      <article class="card">
+        <h3>Weapons & Range</h3>
+        <p>Each weapon has a damage rating and one or more ranges. The main ranges are melee, throwing, and shooting. A target must be inside one of the weapon’s listed ranges to be attacked with it. Unarmed attacks are always melee attacks.</p>
+        <p>If a character uses more than one weapon, start with the highest damage rating, then add half of the second weapon’s damage rating, rounded up. Additional weapons keep adding smaller fractions, which creates diminishing returns.</p>
+      </article>
+
+      <article class="card">
+        <h3>Damage</h3>
+        <p>After successes are canceled, the remaining successes are multiplied by the weapon’s damage rating. That total is the incoming damage before armour absorbs it.</p>
+        <div class="example-box">
+          <strong>Example</strong>
+          <p>2 net successes with a damage rating of 2 produces 4 damage.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two-up">
+      <article class="card">
+        <h3>Armour & Defense</h3>
+        <p>Armour automatically absorbs damage equal to its armour rating. If armour absorbs damage during one round, it cannot absorb damage again on the next round. After combat, damaged armour must be repaired before it can be fully used again.</p>
+        <p>Each armour type has at least one weak range. If the attack comes from that weak range, the armour only protects at half value. Some armour also has special strengths or weaknesses against certain damage types, weapon types, or situations.</p>
+      </article>
+
+      <article class="card">
+        <h3>Health & Injury</h3>
+        <p>Damage that gets past armour is applied to health. When a character falls to half health or lower, they permanently lose 1 die from combat rolls until healed. Healing after battle requires time, resources, or magic.</p>
+      </article>
+    </section>
+
+    <section class="grid two-up">
+      <article class="card">
+        <h3>Tactical Attacks</h3>
+        <p>A tactical attack sacrifices some damage in order to weaken the opponent. A character can choose to deal half normal damage and instead apply tactical successes. Each tactical success reduces the number of dice the opponent may roll on their next round of combat.</p>
+        <p>Players should describe what that tactical advantage looks like in the fiction, such as a feint, shove, wound, distraction, or positional control.</p>
+      </article>
+
+      <article class="card">
+        <h3>Stealth</h3>
+        <p>Stealth matters both before and during combat. At the start of combat, stealthed characters act before everyone else in initiative. During combat, a character may spend a round making a stealth roll instead of a combat roll. If successful, they cannot be directly targeted by opponents who failed to detect them, and on their next turn they may make an uncontested attack using the successes earned from stealth.</p>
+        <p>Stealth is checked against the opponents being hidden from, so it is possible to be hidden from some enemies but not others.</p>
+      </article>
+    </section>
+
+    <section class="grid two-up">
+      <article class="card">
+        <h3>Initiative</h3>
+        <p>Initiative is rolled once at the start of combat. First, all stealthed characters roll among themselves to see who acts first. Then all non-stealthed characters roll among themselves. Everyone rolls 1d6, and ties are rerolled.</p>
+      </article>
+
+      <article class="card">
+        <h3>Magic Items & Charges</h3>
+        <p>Magic items use a charge-based system. Each item has a limited number of uses before it must be recharged. For the current campaign, items such as the ice axe, healing amulet, animated raven, staff of banishing, and air bubble gauntlets each have 6 uses before recharge.</p>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Simplified Combat Rules for Early Play</h3>
+        <ul class="clean-list stacked">
+          <li>Roll initiative once at the start of combat.</li>
+          <li>Stealthed characters go before non-stealthed characters.</li>
+          <li>Attacker and defender roll together.</li>
+          <li>Successes automatically cancel opposing successes.</li>
+          <li>Remaining successes deal damage based on the chosen weapon.</li>
+          <li>Tactical attacks remain available, but all-out attacks are removed for now to keep play simple.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
