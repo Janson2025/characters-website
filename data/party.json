@@ -7,12 +7,12 @@
       "race": "Krockan",
       "portrait": "images/sarian.webp",
       "health": {
-        "current": 12,
-        "max": 12
+        "current": 20,
+        "max": 25
       },
       "armour": {
-        "current": 4,
-        "max": 4
+        "current": 6,
+        "max": 6
       },
       "attributes": {
         "physical": 1,
@@ -74,12 +74,14 @@
         {
           "name": "Shield",
           "cost": "100 gold pieces",
-          "description": "Adds protection but uses one hand."
+          "description": "Adds protection but uses one hand.",
+          "stats": "2 armour points"
         },
         {
           "name": "Bear Hide Armour",
           "cost": "100 gold pieces",
-          "description": "Medium armour."
+          "description": "Medium armour.",
+          "stats": "4 armour points"
         },
         {
           "name": "Medicine Kit (Heavy)",
@@ -140,8 +142,8 @@
       "race": "",
       "portrait": "images/yaro.webp",
       "health": {
-        "current": 9,
-        "max": 9
+        "current": 20,
+        "max": 20
       },
       "armour": {
         "current": 1,
@@ -210,6 +212,11 @@
           {
             "name": "Spirit Crystals",
             "amount": 10
+          },
+          {
+            "name": "light mage garments",
+            "amount": 1,
+            "stats": "1 armour points"
           }
         ],
         "supplies": []
@@ -232,12 +239,12 @@
       "race": "Bearver Bear",
       "portrait": "images/Bo.webp",
       "health": {
-        "current": 11,
-        "max": 11
+        "current": 20,
+        "max": 20
       },
       "armour": {
-        "current": 2,
-        "max": 2
+        "current": 4,
+        "max": 4
       },
       "attributes": {
         "physical": 1,
@@ -270,12 +277,19 @@
       "inventory": [
         {
           "name": "Gauntlets",
-          "cost": "",
-          "description": "Can be used in combat and can create an underwater air bubble large enough for a small party."
+          "cost": "150 gold pieces",
+          "description": "Can be used in combat and can create an underwater air bubble large enough for a small party.",
+          "stats": "2 armour points"
+        },
+        {
+          "name": "light scale armour",
+          "cost": "30 gold pieces",
+          "description": "Medium armour.",
+          "stats": "2 armour points"
         },
         {
           "name": "Trident",
-          "cost": "",
+          "cost": "30 gold pieces",
           "description": "Useful for melee combat and underwater encounters."
         }
       ],
